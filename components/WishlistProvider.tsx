@@ -3,6 +3,7 @@
 
 import {
   createContext,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -135,7 +136,7 @@ export function WishlistProvider({
 }: {
   children: ReactNode;
 }) {
-  const pathname = usePathname();
+  const [pathname, setPathname] = useState<string | null>(null);
 
   const [entries, setEntries] = useState<WishlistEntry[]>([]);
   const [ready, setReady] = useState(false);
@@ -179,7 +180,7 @@ export function WishlistProvider({
 
   // Load account data on entry and after navigation, including after login.
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || pathname === null) return;
 
     let active = true;
 
@@ -385,10 +386,29 @@ export function WishlistProvider({
   );
 
   return (
-    <WishlistContext.Provider value={value}>
-      {children}
-    </WishlistContext.Provider>
-  );
+  <WishlistContext.Provider value={value}>
+    <Suspense fallback={null}>
+      <WishlistPathnameObserver
+        onPathnameChange={setPathname}
+      />
+    </Suspense>
+
+    {children}
+  </WishlistContext.Provider>
+);
+}
+function WishlistPathnameObserver({
+  onPathnameChange,
+}: {
+  onPathnameChange: (pathname: string | null) => void;
+}) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    onPathnameChange(pathname);
+  }, [pathname, onPathnameChange]);
+
+  return null;
 }
 
 export function useWishlist() {

@@ -132,7 +132,7 @@ export default async function Home() {
             </a>
           ))}
 
-          <a className="category-card outfit-card" href="#studio">
+          <a className="category-card outfit-card" href="/outfit-lab">
             <div className="outfit-orbit orbit-one" />
             <div className="outfit-orbit orbit-two" />
             <div className="outfit-copy">
