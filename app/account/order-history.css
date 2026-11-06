@@ -1,0 +1,417 @@
+/* ANFA ID — Customer order history */
+.anfa-id-address-only-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.anfa-id-orders-section {
+  margin-top: clamp(30px, 4vw, 48px);
+  padding-top: clamp(24px, 3vw, 34px);
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+  color: #171818;
+}
+
+.anfa-id-orders-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.anfa-id-orders-heading .eyebrow {
+  margin: 0 0 10px;
+  color: #777970;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.anfa-id-orders-heading h3 {
+  margin: 0;
+  font-size: clamp(23px, 2.5vw, 32px);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1.08;
+}
+
+.anfa-id-orders-heading h3 span {
+  color: #7a8068;
+}
+
+.anfa-id-orders-intro {
+  max-width: 520px;
+  margin: 10px 0 0;
+  color: #62655d;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.anfa-id-orders-refresh,
+.anfa-id-orders-message button,
+.anfa-id-orders-more {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 13px;
+  border: 1px solid rgba(23, 24, 24, 0.22);
+  border-radius: 0;
+  background: transparent;
+  color: #171818;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.anfa-id-orders-refresh:hover:not(:disabled),
+.anfa-id-orders-message button:hover:not(:disabled),
+.anfa-id-orders-more:hover:not(:disabled) {
+  border-color: #171818;
+  background: #171818;
+  color: #f2f1eb;
+}
+
+.anfa-id-orders-refresh:disabled,
+.anfa-id-orders-message button:disabled,
+.anfa-id-orders-more:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.anfa-id-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.anfa-id-order-card {
+  min-width: 0;
+  padding: clamp(15px, 2vw, 22px);
+  border: 1px solid rgba(23, 24, 24, 0.15);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.anfa-id-order-topline,
+.anfa-id-order-bottomline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.anfa-id-order-topline {
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(23, 24, 24, 0.12);
+}
+
+.anfa-id-order-topline > div:first-child,
+.anfa-id-order-bottomline > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.anfa-id-order-reference,
+.anfa-id-order-bottomline span {
+  color: #777970;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+
+.anfa-id-order-topline time {
+  color: #62655d;
+  font-size: 11px;
+}
+
+.anfa-id-order-status {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  border: 1px solid rgba(23, 24, 24, 0.12);
+  background: #eeeee7;
+  color: #42443d;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.anfa-id-order-status > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #777970;
+}
+
+.anfa-id-order-status.is-cancelled {
+  border-color: #e2c2ba;
+  background: #f8e9e5;
+  color: #8c3329;
+}
+
+.anfa-id-order-status.is-cancelled > span {
+  background: #a34438;
+}
+
+.anfa-id-order-status.is-completed {
+  border-color: #ccd2bf;
+  background: #edf0e6;
+  color: #3f5739;
+}
+
+.anfa-id-order-status.is-completed > span {
+  background: #5f7854;
+}
+
+.anfa-id-order-status.is-pending {
+  border-color: #d8d6c6;
+  background: #f4f1e5;
+  color: #73653e;
+}
+
+.anfa-id-order-status.is-pending > span {
+  background: #9c8750;
+}
+
+.anfa-id-order-items {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.anfa-id-order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(23, 24, 24, 0.08);
+}
+
+.anfa-id-order-item:last-child {
+  border-bottom: 0;
+}
+
+.anfa-id-order-item > img,
+.anfa-id-order-item-placeholder {
+  display: block;
+  width: 48px;
+  height: 60px;
+  flex: 0 0 48px;
+  object-fit: cover;
+  background: #e5e4dc;
+}
+
+.anfa-id-order-item-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777970;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.anfa-id-order-item-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.anfa-id-order-item-copy strong {
+  overflow-wrap: anywhere;
+  color: #171818;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.anfa-id-order-item-copy span,
+.anfa-id-order-item-copy small {
+  color: #62655d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.anfa-id-order-more-items,
+.anfa-id-order-no-items {
+  margin: 7px 0;
+  color: #62655d;
+  font-size: 10px;
+}
+
+.anfa-id-order-bottomline {
+  align-items: flex-end;
+  margin-top: 5px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(23, 24, 24, 0.12);
+}
+
+.anfa-id-order-bottomline strong {
+  color: #171818;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.anfa-id-order-total {
+  text-align: right;
+}
+
+.anfa-id-order-total strong {
+  font-size: 16px;
+  letter-spacing: -0.025em;
+}
+
+.anfa-id-order-cancel-note {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-left: 2px solid #a34438;
+  background: #f8e9e5;
+  color: #73362e;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.anfa-id-orders-empty,
+.anfa-id-orders-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid rgba(23, 24, 24, 0.14);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.anfa-id-orders-empty-index {
+  color: #777970;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.anfa-id-orders-empty strong {
+  color: #171818;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.anfa-id-orders-empty p,
+.anfa-id-orders-message span {
+  margin: 0;
+  color: #62655d;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.anfa-id-orders-shop-link {
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 12px 14px;
+  background: #171818;
+  color: #f2f1eb;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.anfa-id-orders-message.is-error {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-color: #e2c2ba;
+  background: #f8e9e5;
+}
+
+.anfa-id-orders-more-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 17px;
+}
+
+.anfa-id-orders-more-wrap > span {
+  color: #777970;
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  .anfa-id-orders-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .anfa-id-orders-refresh {
+    align-self: flex-start;
+  }
+
+  .anfa-id-order-topline,
+  .anfa-id-order-bottomline {
+    gap: 10px;
+  }
+
+  .anfa-id-order-status {
+    padding: 6px 7px;
+    font-size: 8px;
+  }
+
+  .anfa-id-orders-message.is-error {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .anfa-id-orders-more-wrap {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+.anfa-id-order-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.anfa-id-order-track-link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 18px;
+  border: 1px solid #20221b;
+  background: #20221b;
+  color: #f5f4ee;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .09em;
+  text-decoration: none;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.anfa-id-order-track-link:hover {
+  border-color: #777b5c;
+  background: #777b5c;
+  color: #fff;
+}
+
+.anfa-id-order-track-link:focus-visible {
+  outline: 2px solid #777b5c;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .anfa-id-order-actions { justify-content: stretch; }
+  .anfa-id-order-track-link { width: 100%; }
+}
