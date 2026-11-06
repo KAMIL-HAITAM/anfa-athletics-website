@@ -5,7 +5,23 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { useCart } from "./CartProvider";
 import type { Product, ProductVariant } from "../data/products";
 import styles from "./OutfitLabBuilder.module.css";
+import dynamic from "next/dynamic";
+import type {
+  OutfitBottomStyle,
+  OutfitTopStyle,
+} from "./OutfitLab3DView";
 
+const OutfitLab3DView = dynamic(
+  () => import("./OutfitLab3DView"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className={styles.viewerLoading}>
+        PRÉPARATION DU STUDIO 3D…
+      </div>
+    ),
+  }
+);
 function variantsFor(product?: Product): ProductVariant[] {
   if (!product) return [];
 
@@ -121,7 +137,25 @@ function productImage(
 ): string {
   return variant?.images[0]?.src || product?.image || "";
 }
+function getTopStyle(product?: Product): OutfitTopStyle {
+  const name = `${product?.name ?? ""} ${product?.slug ?? ""}`.toLowerCase();
 
+  if (name.includes("hoodie")) return "hoodie";
+  if (name.includes("brassiere") || name.includes("bra")) return "bra";
+  if (name.includes("crop")) return "crop";
+  if (name.includes("compression")) return "compression";
+
+  return "tee";
+}
+
+function getBottomStyle(product?: Product): OutfitBottomStyle {
+  const name = `${product?.name ?? ""} ${product?.slug ?? ""}`.toLowerCase();
+
+  if (name.includes("short")) return "shorts";
+  if (name.includes("legging")) return "leggings";
+
+  return "jogger";
+}
 export default function OutfitLabBuilder({
   products,
 }: {
@@ -270,57 +304,32 @@ export default function OutfitLabBuilder({
             <span>ANFA / 01</span>
           </div>
 
-          <div className={styles.look}>
-            <article className={styles.lookPiece}>
-              <div
-                className={styles.pieceImage}
-                role="img"
-                aria-label={topProduct?.name ?? "Haut"}
-                style={{
-                  backgroundImage: productImage(topProduct, topVariant)
-                    ? `url("${productImage(topProduct, topVariant)}")`
-                    : undefined,
-                }}
-              >
-                {!productImage(topProduct, topVariant) && (
-                  <span>VISUEL EN PRÉPARATION</span>
-                )}
-              </div>
+          <div className={styles.viewer}>
+  <OutfitLab3DView
+    topColor={topVariant?.hex ?? "#171818"}
+    bottomColor={bottomVariant?.hex ?? "#171818"}
+    topStyle={getTopStyle(topProduct)}
+    bottomStyle={getBottomStyle(bottomProduct)}
+  />
 
-              <span className={styles.pieceNumber}>01 / HAUT</span>
-              <h2>{topProduct?.name ?? "Choisissez un haut"}</h2>
-              <p>{topVariant?.name ?? ""}</p>
-            </article>
+  <span className={styles.viewerHint}>
+    GLISSEZ POUR PIVOTER · UTILISEZ LA MOLETTE POUR ZOOMER
+  </span>
+</div>
 
-            <article className={styles.lookPiece}>
-              <div
-                className={styles.pieceImage}
-                role="img"
-                aria-label={bottomProduct?.name ?? "Bas"}
-                style={{
-                  backgroundImage: productImage(
-                    bottomProduct,
-                    bottomVariant
-                  )
-                    ? `url("${productImage(bottomProduct, bottomVariant)}")`
-                    : undefined,
-                }}
-              >
-                {!productImage(bottomProduct, bottomVariant) && (
-                  <span>VISUEL EN PRÉPARATION</span>
-                )}
-              </div>
+<div className={styles.lookMeta}>
+  <div className={styles.lookMetaItem}>
+    <span className={styles.lookMetaLabel}>01 / HAUT</span>
+    <strong>{topProduct?.name ?? "Choisissez un haut"}</strong>
+    <small>{topVariant?.name ?? "—"}</small>
+  </div>
 
-              <span className={styles.pieceNumber}>02 / BAS</span>
-              <h2>{bottomProduct?.name ?? "Choisissez un bas"}</h2>
-              <p>{bottomVariant?.name ?? ""}</p>
-            </article>
-          </div>
-
-          <div className={styles.previewFooter}>
-            <span>DISCIPLINE / PROGRESSION / IDENTITÉ</span>
-            <span>CASABLANCA, MOROCCO</span>
-          </div>
+  <div className={styles.lookMetaItem}>
+    <span className={styles.lookMetaLabel}>02 / BAS</span>
+    <strong>{bottomProduct?.name ?? "Choisissez un bas"}</strong>
+    <small>{bottomVariant?.name ?? "—"}</small>
+  </div>
+</div>
         </section>
 
         <section className={styles.controls} aria-label="Personnaliser le look">
